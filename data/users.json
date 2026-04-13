@@ -10,5 +10,11 @@
         "nom": "SOw",
         "email": "amadouourysow2130@gmail.com",
         "mot_de_passe": "2222"
+    },
+    {
+        "id": 3,
+        "nom": "sow",
+        "email": "Diallo@gmail.com",
+        "mot_de_passe": "1234"
     }
 ]
