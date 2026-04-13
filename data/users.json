@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "nom": "Sow",
+        "email": "amadouourysow@gmail.com",
+        "mot_de_passe": "1234"
+    },
+    {
+        "id": 2,
+        "nom": "SOw",
+        "email": "amadouourysow2130@gmail.com",
+        "mot_de_passe": "2222"
+    }
+]
