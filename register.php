@@ -1,7 +1,7 @@
 <?php
 // ===============================
-// 🔵 BACKEND AMADOU - INSCRIPTION
-// ===============================
+//  BACKEND AMADOU - INSCRIPTION
+// ===============================a
 
 require_once 'includes/json_utils.php';
 require_once 'includes/session.php'; 
