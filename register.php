@@ -4,7 +4,7 @@
 // ===============================
 
 require_once 'includes/json_utils.php';
-require_once 'includes/session.php';
+require_once 'includes/session.php'; 
 
 $message = "";
 
