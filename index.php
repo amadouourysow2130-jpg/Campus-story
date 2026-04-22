@@ -103,8 +103,10 @@ usort($stories_filtrees, function($a, $b) {
             <p><?php echo $story["contenu"]; ?></p>
 
             <a href="story.php?id=<?php echo $story["id"]; ?>">Voir plus</a>
+
             <?php if (utilisateur_connecte() && obtenir_utilisateur()["nom"] === $story["auteur"]): ?>
-                <a href="delete_story.php?id=<?php echo $story["id"]; ?>">Supprimer</a>
+                | <a href="edit_story.php?id=<?php echo $story["id"]; ?>">Modifier</a>
+                | <a href="delete_story.php?id=<?php echo $story["id"]; ?>">Supprimer</a>
             <?php endif; ?>
         </div>
     <?php endforeach; ?>

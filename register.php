@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             connecter_utilisateur($nouvel_user);
 
             // Redirection
-            header("Location: index.php");
+            header("Location: login.php");
             exit();
         }
     }

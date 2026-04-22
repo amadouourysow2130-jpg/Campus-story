@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "id": 1,
+        "titre": "mon premier jour",
+        "contenu": "je suis venu ce jour et y'avait des gens qui me regardait par tout iojojpmjpoj",
+        "categorie": "Examens",
+        "type_experience": "Témoignage",
+        "auteur": "SOw",
+        "date": "2026-04-22 16:20:58",
+        "reactions": {
+            "utile": 0,
+            "inspirant": 0,
+            "vecu_pareil": 0,
+            "bon_conseil": 0,
+            "a_eviter": 0
+        }
+    }
+]
