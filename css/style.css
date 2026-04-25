@@ -463,3 +463,14 @@ button[type="submit"] {
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     }
 }
+
+.glass-container {
+    max-width: 95%;
+    margin: 10px auto;
+    padding: 10px;
+    background: rgba(0,0,0,0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.01);
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.03);
+}

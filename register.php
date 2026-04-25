@@ -60,8 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 
-//Lysa fronted
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,25 +67,43 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-left">
 
-<h2>Créer un compte</h2>
+        </div>
 
-<?php if ($message != ""): ?>
-    <p style="color:red;"><?php echo $message; ?></p>
-<?php endif; ?>
+        <div class="nav-center">
+            <a href="index.php" class="logo-link">
+                <h1>Campus Stories</h1>
+            </a>
+        </div>
 
-<form method="POST">
-    <label>Nom :</label><br>
-    <input type="text" name="nom"><br><br>
+        <div class="menu nav-right">
+           
+        </div>
+    </nav>
 
-    <label>Email :</label><br>
-    <input type="email" name="email"><br><br>
+    <div class="reader-container"> <form methode="POST" action="register.php" class="login-form">
+        <h2>Créer un compte</h2>
 
-    <label>Mot de passe :</label><br>
-    <input type="password" name="mot_de_passe"><br><br>
+        <?php if (isset($message) && $message != ""): ?>
+            <p style="color:#e74c3c; font-weight:bold; text-align:center;"><?php echo $message; ?></p>
+        <?php endif; ?>
 
-    <button type="submit">S'inscrire</button>
-</form>
+        <label>Nom d'utilisateur</label>
+        <input type="text" name="nom" required placeholder="Votre nom ou pseudo">
 
+        <label>Email</label>
+        <input type="email" name="email" required placeholder="votre@email.com">
+        
+        <label>Mot de passe</label>
+        <input type="password" name="mot_de_passe" required placeholder="........">
+
+        <button type="submit">S'inscrire</button>
+
+        <p class="auth-switch">
+            Déjà un compte ? <a href="login.php">Connectez-vous ici</a>
+        </p>
+    </form></div>
 </body>
 </html>

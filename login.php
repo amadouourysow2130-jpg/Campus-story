@@ -68,21 +68,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
     </nav>
 
-<h2>Connexion</h2>
+    <div class="reader-container"> <form method="POST" action="login.php" class="login-form">
+        <h2>Connexion</h2>
+        
+        <?php if (isset($message) && $message != ""): ?>
+            <p style="color:#e74c3c; font-weight:bold; text-align:center;"><?php echo $message; ?></p>
+        <?php endif; ?>
+        
+        <label>Email</label>
+        <input type="email" name="email" required placeholder="votre@email.com">
+        
+        <label>Mot de passe</label>
+        <input type="password" name="mot_de_passe" required placeholder="........">
+        
+        <button type="submit">Se connecter</button>
 
-<?php if ($message != ""): ?>
-    <p style="color:red;"><?php echo $message; ?></p>
-<?php endif; ?>
-
-<form method="POST">
-    <label>Email :</label><br>
-    <input type="email" name="email"><br><br>
-
-    <label>Mot de passe :</label><br>
-    <input type="password" name="mot_de_passe"><br><br>
-
-    <button type="submit">Se connecter</button>
-</form>
-
+        <p class="auth-switch">
+            Pas encore de compte ? <a href="register.php">Inscrivez-vous</a>
+        </p>
+    </form></div>
 </body>
 </html>

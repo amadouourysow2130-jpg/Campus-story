@@ -72,6 +72,8 @@ usort($stories_filtrees, function($a, $b) {
         </div>
     </section>
 
+<div class="glass-container">
+
  <section class="filter-bar">
     <h2 class="grid-title">Grille de Stories</h2>
     <form method="GET" class="filter-form">
@@ -125,6 +127,7 @@ usort($stories_filtrees, function($a, $b) {
             </div>
         <?php endforeach; ?>
     <?php endif; ?></main>
+</div>
 
     <script src="java/ajax.js"></script>
     <script src="java/main.js"></script>

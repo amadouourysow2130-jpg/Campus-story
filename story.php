@@ -94,6 +94,7 @@ $recommandations = array_slice($recommandations, 0, 3);
     </div>
 </main>
 
+<div class="glass-container">
 <section class="suggestions-section">
     <h2 class="suggestions-title">À lire aussi</h2>
 
@@ -123,5 +124,6 @@ $recommandations = array_slice($recommandations, 0, 3);
                 <?php endif; ?>
             </div>
 </section>
+</div>
 </body>
 </html>
