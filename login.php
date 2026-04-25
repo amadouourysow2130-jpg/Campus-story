@@ -52,6 +52,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <!--  FRONTEND LYSA - FORMULAIRE -->
 <!-- ============================== -->
 
+<nav class="navbar">
+        <div class="nav-left">
+
+        </div>
+
+        <div class="nav-center">
+            <a href="index.php" class="logo-link">
+                <h1>Campus Stories</h1>
+            </a>
+        </div>
+
+        <div class="menu nav-right">
+           
+        </div>
+    </nav>
+
 <h2>Connexion</h2>
 
 <?php if ($message != ""): ?>
