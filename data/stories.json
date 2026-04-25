@@ -14,5 +14,37 @@
             "bon_conseil": 0,
             "a_eviter": 0
         }
+    },
+    {
+        "id": 2,
+        "titre": "mon premier controle",
+        "contenu": "c'était pluôt çava avec le c",
+        "categorie": "Cours",
+        "type_experience": "Témoignage",
+        "auteur": "Shadow",
+        "date": "2026-04-22 16:51:18",
+        "reactions": {
+            "utile": 0,
+            "inspirant": 0,
+            "vecu_pareil": 0,
+            "bon_conseil": 0,
+            "a_eviter": 0
+        }
+    },
+    {
+        "id": 3,
+        "titre": "mon exam",
+        "contenu": "j'etais venu ce jour tôt un peu stressé",
+        "categorie": "Difficultés",
+        "type_experience": "Conseil",
+        "auteur": "Shadow",
+        "date": "2026-04-22 16:52:47",
+        "reactions": {
+            "utile": 0,
+            "inspirant": 0,
+            "vecu_pareil": 0,
+            "bon_conseil": 0,
+            "a_eviter": 0
+        }
     }
 ]
