@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "nom": "Sow",
+        "email": "amadouourysow@gmail.com",
+        "mot_de_passe": "1234"
+    },
+    {
+        "id": 2,
+        "nom": "SOw",
+        "email": "amadouourysow2130@gmail.com",
+        "mot_de_passe": "2222"
+    },
+    {
+        "id": 3,
+        "nom": "sow",
+        "email": "Diallo@gmail.com",
+        "mot_de_passe": "1234"
+    },
+    {
+        "id": 4,
+        "nom": "Shadow",
+        "email": "shadow@gmail.com",
+        "mot_de_passe": "hadi"
+    },
+    {
+        "id": 5,
+        "nom": "balde",
+        "email": "boubacar@gmail.com",
+        "mot_de_passe": "1234"
+    },
+    {
+        "id": 6,
+        "nom": "sss",
+        "email": "sss@gmail.com",
+        "mot_de_passe": "2222"
+    }
+]
