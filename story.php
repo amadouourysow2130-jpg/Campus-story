@@ -126,7 +126,7 @@ $recommandations = array_slice($recommandations, 0, 3);
                     <p class="story-excerpt"><?php echo substr($rec["contenu"], 0, 80); ?>...</p>
                     
                     <div class="story-card-footer">
-                        <span class="author-name">👤 <?php echo $rec["auteur"]; ?></span>
+                        <span class="author-name"> <?php echo $rec["auteur"]; ?></span>
                         <a href="story.php?id=<?php echo $rec["id"]; ?>" class="view-more">Lire l'histoire →</a>
                     </div>
                 </div>

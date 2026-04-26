@@ -160,17 +160,20 @@ $top_5 = array_slice($stories_top,0,5);
                     <p class="story-excerpt"><?php echo htmlspecialchars(substr($story["contenu"], 0, 100)); ?>...</p>
                     
                     <div class="story-card-footer">
-                        <span class="author-name"><?php echo htmlspecialchars($story["auteur"]); ?></span>
-                
-                        <?php if (utilisateur_connecte() && obtenir_utilisateur()["nom"] === $story["auteur"]): ?>
-                            <div class="author-actions">
-                                <span class="action-link" onclick="event.preventDefault(); window.location.href='edit_story.php?id=<?php echo $story['id']; ?>';">Modifier</span>
-                                <span class="action-link delete" onclick="event.preventDefault(); window.location.href='delete_story.php?id=<?php echo $story['id']; ?>';">Supprimer</span>
+                        <div class="user-info">
+                            <div class="author-block">
+                                <span class="material-symbols-outlined author-icon">account_circle</span>
+                                <span class="author-name"><?php echo htmlspecialchars($story["auteur"]); ?></span>
                             </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </a>
+                            
+                            <?php if (utilisateur_connecte() && obtenir_utilisateur()["nom"] === $story["auteur"]): ?>
+                                <div class="author-actions">
+                                    <span class="action-link" onclick="event.preventDefault(); window.location.href='edit_story.php?id=<?php echo $story['id']; ?>';">Modifier</span>
+                                    <span class="action-link delete" onclick="event.preventDefault(); window.location.href='delete_story.php?id=<?php echo $story['id']; ?>';">Supprimer</span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div></div></a>
             <?php endforeach; ?>
         <?php endif; ?></main>
 

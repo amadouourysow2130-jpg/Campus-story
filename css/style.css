@@ -286,6 +286,13 @@ h2{
     color: #ff7675
 }
 
+.author-block {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
 .author-name {
     font-weight: bold;
     font-size: 0.85rem;
@@ -295,6 +302,11 @@ h2{
 .author-actions {
     font-size: 0.75rem;
     margin-top: 5px;
+}
+
+.author-icon {
+    font-size: 18px !important;
+    opacity: 0.8;
 }
 
 .view-more {
