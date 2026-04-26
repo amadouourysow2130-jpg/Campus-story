@@ -45,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <title>Connexion</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
 
@@ -54,7 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <nav class="navbar">
         <div class="nav-left">
-
+            <?php if(utilisateur_connecte()): ?>
+                <span class="user-badge">
+                    <span class="material-symbols-outlined">account_circle</span>
+                    <?php echo htmlspecialchars(obtenir_utilisateur()["nom"]); ?>
+                </span>
+            <?php endif; ?>
         </div>
 
         <div class="nav-center">
@@ -64,7 +70,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
 
         <div class="menu nav-right">
-           
+            <?php if(utilisateur_connecte()): ?>
+                <a href="create_story.php" class="user-badge nav-link-badge">
+                    <span class="material-symbols-outlined">add_circle</span>
+                    Publier
+                </a>
+                <a href="logout.php" class="user-badge nav-link-badge logout-hover">
+                    <span class="material-symbols-outlined">logout</span>
+                    Déconnexion
+                </a>
+            <?php else: ?>
+                <a href="login.php" class="user-badge nav-link-badge">
+                    <span class="material-symbols-outlined">login</span>
+                    Connexion
+                </a>
+            <?php endif; ?>
         </div>
     </nav>
 

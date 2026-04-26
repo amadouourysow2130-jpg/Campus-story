@@ -22,6 +22,18 @@ foreach ($stories as $story) {
 usort($stories_filtrees, function($a, $b) {
     return strtotime($b["date"]) - strtotime($a["date"]);
 });
+
+//prendre le top des stories les plus utiles
+$stories_top = lire_json($chemin);
+
+usort($stories_top, function($a, $b) {
+    $utiles_a =isset($a["reactions"]["utile"]) ? $a["reactions"]["utile"] : 0;
+    $utiles_b =isset($b["reactions"]["utile"]) ? $b["reactions"]["utile"] : 0;
+    return $utiles_b - $utiles_a;
+});
+
+$top_5 = array_slice($stories_top,0,5);
+
 ?>
 
 <!DOCTYPE html>
@@ -30,12 +42,18 @@ usort($stories_filtrees, function($a, $b) {
     <meta charset="UTF-8">
     <title>Campus Stories</title>
     <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
 
     <nav class="navbar">
         <div class="nav-left">
-
+            <?php if(utilisateur_connecte()): ?>
+                <span class="user-badge">
+                    <span class="material-symbols-outlined">account_circle</span>
+                    <?php echo htmlspecialchars(obtenir_utilisateur()["nom"]); ?>
+                </span>
+            <?php endif; ?>
         </div>
 
         <div class="nav-center">
@@ -46,31 +64,53 @@ usort($stories_filtrees, function($a, $b) {
 
         <div class="menu nav-right">
             <?php if(utilisateur_connecte()): ?>
-                <a href="create_story.php">Publier</a>
-                <a href="logout.php">Déconnexion</a>
+                <a href="create_story.php" class="user-badge nav-link-badge">
+                    <span class="material-symbols-outlined">add_circle</span>
+                    Publier
+                </a>
+                <a href="logout.php" class="user-badge nav-link-badge logout-hover">
+                    <span class="material-symbols-outlined">logout</span>
+                    Déconnexion
+                </a>
             <?php else: ?>
-                <a href="login.php">Connexion</a>
+                <a href="login.php" class="user-badge nav-link-badge">
+                    <span class="material-symbols-outlined">login</span>
+                    Connexion
+                </a>
             <?php endif; ?>
         </div>
     </nav>
 
-    <?php if (utilisateur_connecte()): ?>
-        <p style="text-align:center; color:white;">Bienvenue, <?php echo obtenir_utilisateur()["nom"]; ?> !</p>
-    <?php endif; ?>
+    <div class="hero-section">
+        <section class="banner-story">
+            <div class="banner-content">
+                <h2 class="banner-title">PARTAGEZ VOTRE<br><span>EXPÉRIENCE CAMPUS</span></h2>
+                <p class="banner-label"><bold>Histoires, conseils, anecdotes</bold>
+                <br>retrouvez les stories de vos camarades et contribuez à la communauté</p>
+                
+                <?php if (utilisateur_connecte()): ?>
+                    <a href="create_story.php" class="btn-add">+      AJOUTER UNE STORY</a>
+                <?php else: ?>
+                    <a href="register.php" class="btn-add">REJOINDRE LA COMMUNAUTÉ</a>
+                <?php endif; ?>
+            </div>
+        </section>
 
-
-    <section class="banner-story">
-        <div class="banner-content">
-            <h2 class="banner-title">PARTAGEZ VOTRE<br><span>EXPÉRIENCE CAMPUS</span></h2>
-
-            <p class="banner-label"><bold>Histoires, conseils, anecdotes</bold>
-            <br>retrouvez les stories de vos camarades et contribuez à la communauté.
-        </p>
-
-            <a href="create_story.php" class="btn-add">+      AJOUTER UNE STORY</a>
-
-        </div>
-    </section>
+        <aside class="top-stories">
+            <h3>LES PLUS UTILES</h3>
+            <div class="top-list">
+                <?php foreach ($top_5 as $index => $s): ?>
+                    <a href="story.php?id=<?php echo $s['id']; ?>" class="top-item">
+                        <span class="rank">#<?php echo $index + 1; ?></span>
+                        <div class="top-info">
+                            <p class="top-title"><?php echo htmlspecialchars($s['titre']); ?></p>
+                            <span class="top-meta"><?php echo $s['reactions']['utile']; ?> utiles</span>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </aside>
+    </div>
 
 <div class="glass-container">
 
@@ -99,35 +139,40 @@ usort($stories_filtrees, function($a, $b) {
             <p>Aucune story trouvée.</p>
         <?php else: ?>
             <?php foreach ($stories_filtrees as $story): 
-            $classe_categorie = 'cat-' . strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $story["categorie"])));
+                $search = ['é', 'è', 'ê', 'ë', 'à', 'â', 'î', 'ï', 'ô', 'û', 'ù', 'ç', ' '];
+                $replace = ['e', 'e', 'e', 'e', 'a', 'a', 'i', 'i', 'o', 'u', 'u', 'c', '-'];
+                $nom_propre = str_replace($search,$replace, strtolower(trim($story["categorie"])));
+
+                $nom_propre = preg_replace('/[^a-z0-9]+/', '-', $nom_propre);
+                $nom_propre = trim($nom_propre, '-');
+                
+                $classe_categorie = 'cat-' . $nom_propre;
             ?>
             
-            <div class="story-card">
-                <span class="category-badge <?php echo $classe_categorie; ?>">
-                    <?php echo strtoupper($story["categorie"]); ?>
-                </span>
+            <a href="story.php?id=<?php echo $story['id']; ?>" class="story-card">
+                <div class="card-content">
+                    <span class="category-badge <?php echo $classe_categorie; ?>">
+                        <?php echo strtoupper($story["categorie"]); ?>
+                    </span>
+                    
+                    <h3><?php echo htmlspecialchars($story["titre"]); ?></h3>
                 
-                <h3><?php echo $story["titre"]; ?></h3>
+                    <p class="story-excerpt"><?php echo htmlspecialchars(substr($story["contenu"], 0, 100)); ?>...</p>
+                    
+                    <div class="story-card-footer">
+                        <span class="author-name"><?php echo htmlspecialchars($story["auteur"]); ?></span>
                 
-                <p class="story-excerpt"><?php echo substr($story["contenu"], 0, 100); ?>...</p>
-                
-                <div class="story-card-footer">
-                    <div class="user-info">
-                        <span class="author-name"><?php echo $story["auteur"]; ?></span>
-                        
                         <?php if (utilisateur_connecte() && obtenir_utilisateur()["nom"] === $story["auteur"]): ?>
                             <div class="author-actions">
-                                <a href="edit_story.php?id=<?php echo $story["id"]; ?>">Modifier</a> | 
-                                <a href="delete_story.php?id=<?php echo $story["id"]; ?>" style="color:red;">Supprimer</a>
+                                <span class="action-link" onclick="event.preventDefault(); window.location.href='edit_story.php?id=<?php echo $story['id']; ?>';">Modifier</span>
+                                <span class="action-link delete" onclick="event.preventDefault(); window.location.href='delete_story.php?id=<?php echo $story['id']; ?>';">Supprimer</span>
                             </div>
                         <?php endif; ?>
                     </div>
-                    <a href="story.php?id=<?php echo $story["id"]; ?>" class="view-more">Voir plus -></a>
                 </div>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?></main>
-</div>
+            </a>
+            <?php endforeach; ?>
+        <?php endif; ?></main>
 
     <script src="java/ajax.js"></script>
     <script src="java/main.js"></script>
