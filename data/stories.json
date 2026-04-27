@@ -8,11 +8,26 @@
         "auteur": "SOw",
         "date": "2026-04-22 16:20:58",
         "reactions": {
-            "utile": 0,
-            "inspirant": 0,
+            "utile": 1,
+            "inspirant": 1,
             "vecu_pareil": 0,
-            "bon_conseil": 0,
-            "a_eviter": 0
+            "bon_conseil": 1,
+            "a_eviter": 1
+        },
+        "reacted_users": {
+            "utile": [
+                2
+            ],
+            "inspirant": [
+                2
+            ],
+            "vecu_pareil": [],
+            "bon_conseil": [
+                2
+            ],
+            "a_eviter": [
+                2
+            ]
         }
     },
     {
@@ -40,11 +55,28 @@
         "auteur": "Shadow",
         "date": "2026-04-22 16:52:47",
         "reactions": {
-            "utile": 0,
-            "inspirant": 0,
-            "vecu_pareil": 0,
-            "bon_conseil": 0,
-            "a_eviter": 0
+            "utile": 4,
+            "inspirant": 2,
+            "vecu_pareil": 2,
+            "bon_conseil": 2,
+            "a_eviter": 8
+        },
+        "reacted_users": {
+            "utile": [
+                2
+            ],
+            "inspirant": [
+                2
+            ],
+            "vecu_pareil": [
+                2
+            ],
+            "bon_conseil": [
+                2
+            ],
+            "a_eviter": [
+                2
+            ]
         }
     }
 ]
