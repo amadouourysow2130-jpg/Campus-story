@@ -8,11 +8,26 @@
         "auteur": "SOw",
         "date": "2026-04-22 16:20:58",
         "reactions": {
-            "utile": 0,
-            "inspirant": 0,
+            "utile": 1,
+            "inspirant": 1,
             "vecu_pareil": 0,
-            "bon_conseil": 0,
-            "a_eviter": 0
+            "bon_conseil": 1,
+            "a_eviter": 1
+        },
+        "reacted_users": {
+            "utile": [
+                2
+            ],
+            "inspirant": [
+                2
+            ],
+            "vecu_pareil": [],
+            "bon_conseil": [
+                2
+            ],
+            "a_eviter": [
+                2
+            ]
         }
     },
     {
@@ -32,6 +47,25 @@
         }
     },
     {
+<<<<<<< HEAD
+        "id": 2,
+        "titre": "mon premier controle",
+        "contenu": "c'était pluôt çava avec le c",
+        "categorie": "Cours",
+        "type_experience": "Témoignage",
+        "auteur": "Shadow",
+        "date": "2026-04-22 16:51:18",
+        "reactions": {
+            "utile": 0,
+            "inspirant": 0,
+            "vecu_pareil": 0,
+            "bon_conseil": 0,
+            "a_eviter": 0
+        }
+    },
+    {
+=======
+>>>>>>> 66998439b28dcf2446b5b11aad83e37617644e0a
         "id": 3,
         "titre": "mon exam",
         "contenu": "j'etais venu ce jour tôt un peu stressé",
@@ -40,6 +74,7 @@
         "auteur": "Shadow",
         "date": "2026-04-22 16:52:47",
         "reactions": {
+<<<<<<< HEAD
             "utile": 0,
             "inspirant": 0,
             "vecu_pareil": 0,
@@ -77,6 +112,30 @@
             "vecu_pareil": 0,
             "bon_conseil": 0,
             "a_eviter": 0
+=======
+            "utile": 4,
+            "inspirant": 2,
+            "vecu_pareil": 2,
+            "bon_conseil": 2,
+            "a_eviter": 8
+        },
+        "reacted_users": {
+            "utile": [
+                2
+            ],
+            "inspirant": [
+                2
+            ],
+            "vecu_pareil": [
+                2
+            ],
+            "bon_conseil": [
+                2
+            ],
+            "a_eviter": [
+                2
+            ]
+>>>>>>> 66998439b28dcf2446b5b11aad83e37617644e0a
         }
     }
 ]

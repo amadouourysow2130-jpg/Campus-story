@@ -12,10 +12,12 @@ if (!isset($_GET["id"])) {
 
 $id = $_GET["id"];
 $story_trouvee = null;
+$index = null;
 
-foreach ($stories as $story) {
+foreach ($stories as $i => $story) {
     if ($story["id"] == $id) {
         $story_trouvee = $story;
+        $index = $i;
         break;
     }
 }
@@ -25,6 +27,7 @@ if ($story_trouvee === null) {
     exit();
 }
 
+<<<<<<< HEAD
 $recommandations = [];
 foreach ($stories as $s) {
     if ($s['categorie'] === $story_trouvee['categorie'] && $s['id'] !== $story_trouvee['id']) {
@@ -33,13 +36,59 @@ foreach ($stories as $s) {
 }
 $recommandations = array_slice($recommandations, 0, 3);
 
+=======
+/* Création de reacted_users si elle n'existe pas encore */
+if (!isset($stories[$index]["reacted_users"])) {
+    $stories[$index]["reacted_users"] = [
+        "utile" => [],
+        "inspirant" => [],
+        "vecu_pareil" => [],
+        "bon_conseil" => [],
+        "a_eviter" => []
+    ];
+}
+
+$message = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    if (!utilisateur_connecte()) {
+        $message = "Vous devez être connecté pour réagir.";
+    } else {
+        $reaction = $_POST["reaction"];
+        $utilisateur = obtenir_utilisateur();
+        $user_id = $utilisateur["id"];
+
+        if (isset($stories[$index]["reactions"][$reaction])) {
+
+            if (in_array($user_id, $stories[$index]["reacted_users"][$reaction])) {
+                $message = "Vous avez déjà choisi cette réaction.";
+            } else {
+                $stories[$index]["reactions"][$reaction]++;
+                $stories[$index]["reacted_users"][$reaction][] = $user_id;
+
+                ecrire_json($chemin, $stories);
+
+                header("Location: story.php?id=" . $id);
+                exit();
+            }
+        }
+    }
+}
+
+$story_trouvee = $stories[$index];
+>>>>>>> 66998439b28dcf2446b5b11aad83e37617644e0a
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <title>Détail</title>
+=======
+    <title>Détail de la story</title>
+>>>>>>> 66998439b28dcf2446b5b11aad83e37617644e0a
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
@@ -113,6 +162,7 @@ $recommandations = array_slice($recommandations, 0, 3);
 <section class="suggestions-section">
     <h2 class="suggestions-title">À lire aussi</h2>
 
+<<<<<<< HEAD
     <div class="stories-grid-suggestions">
         <?php foreach ($recommandations as $rec) :
         $classe_cat = 'cat-' . strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $rec["categorie"])));
@@ -131,6 +181,37 @@ $recommandations = array_slice($recommandations, 0, 3);
                     </div>
                 </div>
                 <?php endforeach; ?>
+=======
+<?php if ($message != ""): ?>
+    <p style="color:red;"><?php echo $message; ?></p>
+<?php endif; ?>
+
+<form method="POST">
+    <button type="submit" name="reaction" value="utile">
+        Utile : <?php echo $story_trouvee["reactions"]["utile"]; ?>
+    </button>
+
+    <button type="submit" name="reaction" value="inspirant">
+        Inspirant : <?php echo $story_trouvee["reactions"]["inspirant"]; ?>
+    </button>
+
+    <button type="submit" name="reaction" value="vecu_pareil">
+        J’ai vécu pareil : <?php echo $story_trouvee["reactions"]["vecu_pareil"]; ?>
+    </button>
+
+    <button type="submit" name="reaction" value="bon_conseil">
+        Bon conseil : <?php echo $story_trouvee["reactions"]["bon_conseil"]; ?>
+    </button>
+
+    <button type="submit" name="reaction" value="a_eviter">
+        À éviter : <?php echo $story_trouvee["reactions"]["a_eviter"]; ?>
+    </button>
+</form>
+
+<br>
+
+<a href="index.php">Retour</a>
+>>>>>>> 66998439b28dcf2446b5b11aad83e37617644e0a
 
                 <?php if (empty($recommandations)) : ?>
                     <p style="color: white; opacity: 0.5; text-align: center; width: 100;">
