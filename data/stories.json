@@ -78,5 +78,101 @@
                 2
             ]
         }
+    },
+    {
+        "id": 4,
+        "titre": "lnqnlf",
+        "contenu": "iojnqfn",
+        "categorie": "Cours",
+        "type_experience": "Témoignage",
+        "auteur": "SOw",
+        "date": "2026-04-30 00:44:04",
+        "reactions": {
+            "utile": 1,
+            "inspirant": 1,
+            "vecu_pareil": 0,
+            "bon_conseil": 0,
+            "a_eviter": 0
+        },
+        "reacted_users": {
+            "utile": [
+                2
+            ],
+            "inspirant": [
+                2
+            ],
+            "vecu_pareil": [],
+            "bon_conseil": [],
+            "a_eviter": []
+        }
+    },
+    {
+        "id": 5,
+        "titre": "je suis venu à la revision",
+        "contenu": "bonjour je suis à la bu",
+        "categorie": "Cours",
+        "type_experience": "Bon plan",
+        "auteur": "Shadow",
+        "date": "2026-04-30 15:33:37",
+        "reactions": {
+            "utile": 2,
+            "inspirant": 2,
+            "vecu_pareil": 1,
+            "bon_conseil": 2,
+            "a_eviter": 2
+        },
+        "reacted_users": {
+            "utile": [
+                2,
+                4
+            ],
+            "inspirant": [
+                4,
+                2
+            ],
+            "vecu_pareil": [
+                2
+            ],
+            "bon_conseil": [
+                2,
+                4
+            ],
+            "a_eviter": [
+                2,
+                4
+            ]
+        }
+    },
+    {
+        "id": 6,
+        "titre": "le jour de notre examen",
+        "contenu": "bonjour, le jou...",
+        "categorie": "Logement",
+        "type_experience": "Conseil",
+        "auteur": "SOw",
+        "date": "2026-05-04 12:35:52",
+        "reactions": {
+            "utile": 2,
+            "inspirant": 2,
+            "vecu_pareil": 2,
+            "bon_conseil": 0,
+            "a_eviter": 0
+        },
+        "reacted_users": {
+            "utile": [
+                2,
+                4
+            ],
+            "inspirant": [
+                2,
+                4
+            ],
+            "vecu_pareil": [
+                2,
+                4
+            ],
+            "bon_conseil": [],
+            "a_eviter": []
+        }
     }
 ]

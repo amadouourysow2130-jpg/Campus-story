@@ -27,7 +27,6 @@ if ($story_trouvee === null) {
     exit();
 }
 
-/* Création de reacted_users si elle n'existe pas encore */
 if (!isset($stories[$index]["reacted_users"])) {
     $stories[$index]["reacted_users"] = [
         "utile" => [],
@@ -98,29 +97,52 @@ $story_trouvee = $stories[$index];
 
 <form method="POST">
     <button type="submit" name="reaction" value="utile">
-        Utile : <?php echo $story_trouvee["reactions"]["utile"]; ?>
+        Utile : <span id="reaction-utile"><?php echo $story_trouvee["reactions"]["utile"]; ?></span>
     </button>
 
     <button type="submit" name="reaction" value="inspirant">
-        Inspirant : <?php echo $story_trouvee["reactions"]["inspirant"]; ?>
+        Inspirant : <span id="reaction-inspirant"><?php echo $story_trouvee["reactions"]["inspirant"]; ?></span>
     </button>
 
     <button type="submit" name="reaction" value="vecu_pareil">
-        J’ai vécu pareil : <?php echo $story_trouvee["reactions"]["vecu_pareil"]; ?>
+        J’ai vécu pareil : <span id="reaction-vecu-pareil"><?php echo $story_trouvee["reactions"]["vecu_pareil"]; ?></span>
     </button>
 
     <button type="submit" name="reaction" value="bon_conseil">
-        Bon conseil : <?php echo $story_trouvee["reactions"]["bon_conseil"]; ?>
+        Bon conseil : <span id="reaction-bon-conseil"><?php echo $story_trouvee["reactions"]["bon_conseil"]; ?></span>
     </button>
 
     <button type="submit" name="reaction" value="a_eviter">
-        À éviter : <?php echo $story_trouvee["reactions"]["a_eviter"]; ?>
+        À éviter : <span id="reaction-a-eviter"><?php echo $story_trouvee["reactions"]["a_eviter"]; ?></span>
     </button>
 </form>
 
 <br>
 
 <a href="index.php">Retour</a>
+
+<script>
+const storyId = <?php echo $story_trouvee["id"]; ?>;
+
+function mettreAJourReactions() {
+    fetch("api/get_story.php?id=" + storyId)
+        .then(response => response.json())
+        .then(story => {
+            if (!story) return;
+
+            document.getElementById("reaction-utile").textContent = story.reactions.utile;
+            document.getElementById("reaction-inspirant").textContent = story.reactions.inspirant;
+            document.getElementById("reaction-vecu-pareil").textContent = story.reactions.vecu_pareil;
+            document.getElementById("reaction-bon-conseil").textContent = story.reactions.bon_conseil;
+            document.getElementById("reaction-a-eviter").textContent = story.reactions.a_eviter;
+        })
+        .catch(error => {
+            console.error("Erreur AJAX story :", error);
+        });
+}
+
+setInterval(mettreAJourReactions, 5000);
+</script>
 
 </body>
 </html>
