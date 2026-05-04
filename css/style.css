@@ -352,7 +352,7 @@ h2{
     font-weight: 600;
     font-size: 0.85rem;
     display: block;
-    color: var(--text-color);
+    color: var(--text-on-dark);
 }
 
 .author-actions {
