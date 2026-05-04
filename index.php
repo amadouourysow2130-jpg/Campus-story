@@ -134,7 +134,7 @@ $top_5 = array_slice($stories_top,0,5);
         <div class="title-underline"></div>
     </div>
 
-    <form method="GET" class="filter-form">
+    <form method="GET" class="filter-form" id="filtre-form">
         <div class="filter-group">
             <select name="categorie" id="categorie">
                 <option value="">Toutes les catégories</option>

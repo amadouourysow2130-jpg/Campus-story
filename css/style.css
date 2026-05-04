@@ -240,9 +240,11 @@ h2{
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     width: 100%;
-    max-width: 100%;
+    max-width: 1200px;
     margin: 20px 0;
-    padding: 0;
+    padding: 0 5%;
+    overflow: hidden;
+    box-sizing: border-box;
     overflow: hidden;
 }
 
