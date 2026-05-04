@@ -194,7 +194,13 @@ $top_5 = array_slice($stories_top,0,5);
             <?php endforeach; ?>
         <?php endif; ?></main>
 
+    <script>
+        var utilisateurConnecte = <?php echo utilisateur_connecte() ? 'true' : 'false'; ?>;
+        var nomUtilisateur = "<?php echo (utilisateur_connecte()) ? obtenir_utilisateur()['nom'] : ''; ?>";
+    </script>
+
     <script src="js/ajax.js"></script>
     <script src="js/main.js"></script>
+</body>
 </body>
 </html>
