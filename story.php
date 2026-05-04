@@ -27,7 +27,7 @@ if ($story_trouvee === null) {
     exit();
 }
 
-<<<<<<< HEAD
+
 $recommandations = [];
 foreach ($stories as $s) {
     if ($s['categorie'] === $story_trouvee['categorie'] && $s['id'] !== $story_trouvee['id']) {
@@ -36,7 +36,7 @@ foreach ($stories as $s) {
 }
 $recommandations = array_slice($recommandations, 0, 3);
 
-=======
+
 /* Création de reacted_users si elle n'existe pas encore */
 if (!isset($stories[$index]["reacted_users"])) {
     $stories[$index]["reacted_users"] = [
@@ -77,36 +77,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 $story_trouvee = $stories[$index];
->>>>>>> 66998439b28dcf2446b5b11aad83e37617644e0a
+
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<<<<<<< HEAD
+
     <meta charset="UTF-8">
-    <title>Détail</title>
-=======
-    <title>Détail de la story</title>
->>>>>>> 66998439b28dcf2446b5b11aad83e37617644e0a
+    <title><?php echo htmlspecialchars($story_trouvee["titre"]); ?> - Campus Stories</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <nav class="navbar">
         <div class="nav-left">
             <?php if(utilisateur_connecte()): ?>
-                <span class="user-badge">
+                <a href="profile.php" class="user-badge nav-link-badge" style="text-decoration:none;">
                     <span class="material-symbols-outlined">account_circle</span>
                     <?php echo htmlspecialchars(obtenir_utilisateur()["nom"]); ?>
-                </span>
+                </a>
             <?php endif; ?>
         </div>
 
         <div class="nav-center">
             <a href="index.php" class="logo-link">
-                <h1>Campus Stories</h1>
+                <img src="images/logo.jpg" alt="Logo" class="logo-img">
+                <span class="logo-text">Campus Stories</span>
             </a>
         </div>
 
@@ -130,96 +129,106 @@ $story_trouvee = $stories[$index];
     </nav>
 
     <main class="reader-container"> 
-        <div class="story-full-card"> <h1><?php echo $story_trouvee["titre"]; ?></h1>
-        
-        <div class="meta-data">
-            <p><strong>Auteur :</strong> <?php echo $story_trouvee["auteur"]; ?></p>
-            <p><strong>Catégorie :</strong> <?php echo $story_trouvee["categorie"]; ?> | <strong>Type :</strong> <?php echo $story_trouvee["type_experience"]; ?></p>
-            <p><small>Posté le <?php echo $story_trouvee["date"]; ?></small></p>
-        </div>
-        
-        <div class="story-content">
-            <p><?php echo nl2br($story_trouvee["contenu"]); ?></p>
-        </div>
-        
-        <hr>
-        
-        <h3>Réactions</h3>
-        <div class="reactions-container">
-            <button class="btn-reaction"> Utile : (<?php echo $story_trouvee["reactions"]["utile"]; ?>)</button>
-            <button class="btn-reaction"> Inspirant : (<?php echo $story_trouvee["reactions"]["inspirant"]; ?>)</button>
-            <button class="btn-reaction"> Pareil : (<?php echo $story_trouvee["reactions"]["vecu_pareil"]; ?>)</button>
-            <button class="btn-reaction"> Bon conseil : (<?php echo $story_trouvee["reactions"]["bon_conseil"]; ?>)</button>
-            <button class="btn-reaction"> À éviter : (<?php echo $story_trouvee["reactions"]["a_eviter"]; ?>)</button>
-        </div>
+        <div class="story-full-card">
+            <div class="card-header-flex">
+
+                <div class="header-left header-inline">
+                    <span class="material-symbols-outlined author-icon">account_circle</span> 
+                    <span class="author-name">
+                        <?php echo htmlspecialchars($story_trouvee["auteur"]); ?>
+                    </span>
+                    <span class="post-date">
+                        <?php echo $story_trouvee["date"]; ?>
+                    </span>
+                </div>
+
+                <div class="header-right"> 
+                    <?php
+                    $search =['é', 'è', 'ê', 'ë', 'à', 'â', 'î', 'ï', 'ô', 'û', 'ù', 'ç', ' ']; 
+                    $replace = ['e', 'e', 'e', 'e', 'a', 'a', 'i', 'i', 'o', 'u', 'u', 'c', '-'];
+                    $classe_cat = 'cat-' . str_replace($search, $replace, strtolower($story_trouvee["categorie"]));
+                    ?>
+                    <span class="category-badge <?php echo $classe_cat; ?>">
+                        <?php echo mb_strtoupper(htmlspecialchars($story_trouvee["categorie"]), 'UTF-8'); ?> 
+                    </span> 
+                </div> 
+            </div>
+
+            <h1 class="story-title-main"><?php echo htmlspecialchars($story_trouvee["titre"]); ?></h1>
+
+            <div class="story-content"> 
+                <p><?php echo nl2br(htmlspecialchars($story_trouvee["contenu"])); ?></p>
+            </div>
+
+            <hr class="separator">
+            
+            <h3>Réactions</h3>
+            <?php if ($message != ""): ?>
+                <p style="color:#e74c3c; font-weight:bold; margin-bottom:10px;"><?php echo $message; ?></p>
+            <?php endif; ?>
+            <form method="POST" id="story-reactions">
+                <button type="submit" name="reaction" value="bon_conseil" class="btn-reaction">
+                    <span class="material-symbols-outlined">tips_and_updates</span>
+                    <span>Bon conseil</span>
+                    <span class="count"><?php echo $story_trouvee["reactions"]["bon_conseil"]; ?></span>
+                </button>
+                <button type="submit" name="reaction" value="inspirant" class="btn-reaction">
+                    <span class="material-symbols-outlined">lightbulb</span>
+                    <span>Inspirant</span>
+                    <span class="count"><?php echo $story_trouvee["reactions"]["inspirant"]; ?></span>
+                </button>
+                <button type="submit" name="reaction" value="utile" class="btn-reaction">
+                    <span class="material-symbols-outlined">thumb_up</span>
+                    <span>Utile</span>
+                    <span class="count"><?php echo $story_trouvee["reactions"]["utile"]; ?></span>
+                </button>                
+                <button type="submit" name="reaction" value="vecu_pareil" class="btn-reaction">
+                    <span class="material-symbols-outlined">groups</span>
+                    <span>Pareil</span>
+                    <span class="count"><?php echo $story_trouvee["reactions"]["vecu_pareil"]; ?></span>
+                </button>
+                <button type="submit" name="reaction" value="a_eviter" class="btn-reaction">
+                    <span class="material-symbols-outlined">warning</span>
+                    <span>À éviter</span>
+                    <span class="count"><?php echo $story_trouvee["reactions"]["a_eviter"]; ?></span>
+                </button>
+            </form>
         
         <br>
         <a href="index.php" class="btn-back"> ← Retour</a>
     </div>
 </main>
 
-<div class="glass-container">
+<div class="glass-container suuggestions-bg">
 <section class="suggestions-section">
     <h2 class="suggestions-title">À lire aussi</h2>
 
-<<<<<<< HEAD
+
     <div class="stories-grid-suggestions">
         <?php foreach ($recommandations as $rec) :
-        $classe_cat = 'cat-' . strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $rec["categorie"])));
+        $search =['é', 'è', 'à', 'ç',' ']; $replace = ['e', 'e', 'a', 'c', '-'];
+        $classe_cat = 'cat-' . str_replace($search, $replace, strtolower($rec["categorie"]));
         ?>
-        <div class="story-card">
-            <span class="category-badge <?php echo $classe_cat; ?>">
-                <?php echo strtoupper($rec["categorie"]); ?>
-            </span>
+        <a href="story.php?id=<?php echo $rec['id']; ?>" class="story-card">
+            <span class="category-badge <?php echo $classe_cat; ?>"><?php echo mb_strtoupper($rec["categorie"], 'UTF-8'); ?></span>
+            <h3><?php echo htmlspecialchars($rec["titre"]); ?></h3>
+            <p class="story-excerpt"><?php echo htmlspecialchars(substr($rec["contenu"],0,80)); ?>...</p>
 
-        <h3><?php echo $rec["titre"]; ?></h3>
-                    <p class="story-excerpt"><?php echo substr($rec["contenu"], 0, 80); ?>...</p>
-                    
-                    <div class="story-card-footer">
-                        <span class="author-name"> <?php echo $rec["auteur"]; ?></span>
-                        <a href="story.php?id=<?php echo $rec["id"]; ?>" class="view-more">Lire l'histoire →</a>
-                    </div>
+           <div class="story-card-footer">
+            <div class="user-info">
+                <div class="author-block">
+                    <span class="material-symbols-outlined author-icon">account_circle</span>
+                    <span class="author-name"><?php echo htmlspecialchars($rec["auteur"]); ?></span>
                 </div>
-                <?php endforeach; ?>
-=======
-<?php if ($message != ""): ?>
-    <p style="color:red;"><?php echo $message; ?></p>
-<?php endif; ?>
-
-<form method="POST">
-    <button type="submit" name="reaction" value="utile">
-        Utile : <?php echo $story_trouvee["reactions"]["utile"]; ?>
-    </button>
-
-    <button type="submit" name="reaction" value="inspirant">
-        Inspirant : <?php echo $story_trouvee["reactions"]["inspirant"]; ?>
-    </button>
-
-    <button type="submit" name="reaction" value="vecu_pareil">
-        J’ai vécu pareil : <?php echo $story_trouvee["reactions"]["vecu_pareil"]; ?>
-    </button>
-
-    <button type="submit" name="reaction" value="bon_conseil">
-        Bon conseil : <?php echo $story_trouvee["reactions"]["bon_conseil"]; ?>
-    </button>
-
-    <button type="submit" name="reaction" value="a_eviter">
-        À éviter : <?php echo $story_trouvee["reactions"]["a_eviter"]; ?>
-    </button>
-</form>
-
-<br>
-
-<a href="index.php">Retour</a>
->>>>>>> 66998439b28dcf2446b5b11aad83e37617644e0a
-
-                <?php if (empty($recommandations)) : ?>
-                    <p style="color: white; opacity: 0.5; text-align: center; width: 100;">
-                        Aucune autre histoire dans cette catégorie pour le moment.
-                    </p>
-                <?php endif; ?>
             </div>
-</section>
+        </div>
+    </a>
+    <?php endforeach; ?>
+    
+    <?php if (empty($recommandations)) : ?>
+        <p style="color: #2c3e50; opacity: 0.5; text-align: center; width: 100%;">Aucune suggestion pour le moment.</p>
+        <?php endif; ?>
+    </div> </section> 
 </div>
 </body>
 </html>

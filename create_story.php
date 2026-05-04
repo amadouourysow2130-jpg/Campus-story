@@ -1,9 +1,4 @@
 <?php
-require_once 'includes/session.php';
-proteger_page();
-?>
-
-<?php
 // =================================
 //  BACKEND AMADOU - CREATE STORY
 // =================================
@@ -59,38 +54,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Publier une expérience</title>
+
+    <meta charset="UTF-8">
+    <title>Campus Stories</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- ============================== -->
-<!--  FRONTEND LYSA - FORMULAIRE -->
-<!-- ============================== -->
-
-<nav class="navbar">
+    <nav class="navbar">
         <div class="nav-left">
             <?php if(utilisateur_connecte()): ?>
-                <span class="user-badge">
+                <a href="profile.php" class="user-badge nav-link-badge" style="text-decoration:none;">
                     <span class="material-symbols-outlined">account_circle</span>
                     <?php echo htmlspecialchars(obtenir_utilisateur()["nom"]); ?>
-                </span>
+                </a>
             <?php endif; ?>
         </div>
 
         <div class="nav-center">
             <a href="index.php" class="logo-link">
-                <h1>Campus Stories</h1>
+                <img src="images/logo.jpg" alt="Logo" class="logo-img">
+                <span class="logo-text">Campus Stories</span>
             </a>
         </div>
 
         <div class="menu nav-right">
             <?php if(utilisateur_connecte()): ?>
-                <a href="create_story.php" class="user-badge nav-link-badge">
-                    <span class="material-symbols-outlined">add_circle</span>
-                    Publier
-                </a>
                 <a href="logout.php" class="user-badge nav-link-badge logout-hover">
                     <span class="material-symbols-outlined">logout</span>
                     Déconnexion
@@ -113,9 +104,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <?php endif; ?>
         
         <label>Titre</label>
-        <input type="text" name="titre" placeholder="entrez votre titre" required>
+        <input type="text" name="titre" placeholder="Entrez votre titre" required>
         
-        <label>Votre storie</label>
+        <label>Votre story</label>
         <textarea name="contenu" rows="6" placeholder="Racontez votre expérience..." required></textarea>
         
         <label>Catégorie</label>
@@ -131,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </select>
     
     <label>Type d’expérience</label>
-    <select name="type_experience">
+    <select name="type_experience" required>
         <option value="">Choisir</option>
         <option value="Témoignage">Témoignage</option>
         <option value="Conseil">Conseil</option>
@@ -141,10 +132,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <option value="Expérience marquante">Expérience marquante</option>
     </select>
 
-    <button type="submit">Publier</button>
+    <button type="submit" class="btn-filter">Publier</button>
 
     <p class="auth-switch">
-        <a href="index.php">Retour à l'acceuil</a>
+        <a href="index.php" class="btn-back"> ← Retour à l'acceuil</a>
     </p>
 </form></div>
 

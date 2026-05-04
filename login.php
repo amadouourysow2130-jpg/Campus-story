@@ -46,26 +46,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>Connexion</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-
-<!-- ============================== -->
-<!--  FRONTEND LYSA - FORMULAIRE -->
-<!-- ============================== -->
 
 <nav class="navbar">
         <div class="nav-left">
             <?php if(utilisateur_connecte()): ?>
-                <span class="user-badge">
+                <a href="profile.php" class="user-badge nav-link-badge" style="text-decoration:none;">
                     <span class="material-symbols-outlined">account_circle</span>
                     <?php echo htmlspecialchars(obtenir_utilisateur()["nom"]); ?>
-                </span>
+                </a>
             <?php endif; ?>
         </div>
 
         <div class="nav-center">
             <a href="index.php" class="logo-link">
-                <h1>Campus Stories</h1>
+                <img src="images/logo.jpg" alt="Logo" class="logo-img">
+                <span class="logo-text">Campus Stories</span>
             </a>
         </div>
 

@@ -41,24 +41,26 @@ $top_5 = array_slice($stories_top,0,5);
 <head>
     <meta charset="UTF-8">
     <title>Campus Stories</title>
-    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-
+    
     <nav class="navbar">
         <div class="nav-left">
             <?php if(utilisateur_connecte()): ?>
-                <span class="user-badge">
+                <a href="profile.php" class="user-badge nav-link-badge" style="text-decoration:none;">
                     <span class="material-symbols-outlined">account_circle</span>
                     <?php echo htmlspecialchars(obtenir_utilisateur()["nom"]); ?>
-                </span>
+                </a>
             <?php endif; ?>
         </div>
 
         <div class="nav-center">
             <a href="index.php" class="logo-link">
-                <h1>Campus Stories</h1>
+                <img src="images/logo.jpg" alt="Logo" class="logo-img">
+                <span class="logo-text">Campus Stories</span>
             </a>
         </div>
 
@@ -80,24 +82,36 @@ $top_5 = array_slice($stories_top,0,5);
             <?php endif; ?>
         </div>
     </nav>
-
+    
     <div class="hero-section">
         <section class="banner-story">
-            <div class="banner-content">
-                <h2 class="banner-title">PARTAGEZ VOTRE<br><span>EXPÉRIENCE CAMPUS</span></h2>
-                <p class="banner-label"><bold>Histoires, conseils, anecdotes</bold>
-                <br>retrouvez les stories de vos camarades et contribuez à la communauté</p>
+            <div class="banner-text">
+                <h2 class="banner-title">
+                    PARTAGEZ VOTRE<br><span>EXPÉRIENCE CAMPUS</span>
+                </h2>
+                <p class="banner-label">
+                    <strong>Histoires, conseils, anecdotes</strong><br>
+                    retrouvez les stories de vos camarades et contribuez à la communauté
+                </p>
                 
                 <?php if (utilisateur_connecte()): ?>
-                    <a href="create_story.php" class="btn-add">+      AJOUTER UNE STORY</a>
+                    <a href="create_story.php" class="btn-add">+ AJOUTER UNE STORY</a>
                 <?php else: ?>
                     <a href="register.php" class="btn-add">REJOINDRE LA COMMUNAUTÉ</a>
                 <?php endif; ?>
             </div>
+
+            <div class="banner-image">
+                <img src="images/hero.png" alt="Illustration campus">
+            </div>
+
         </section>
 
         <aside class="top-stories">
-            <h3>LES PLUS UTILES</h3>
+            <h3>
+                <span class="material-symbols-outlined icon-title">emoji_events</span>
+                LES PLUS UTILES
+            </h3>
             <div class="top-list">
                 <?php foreach ($top_5 as $index => $s): ?>
                     <a href="story.php?id=<?php echo $s['id']; ?>" class="top-item">
@@ -115,9 +129,12 @@ $top_5 = array_slice($stories_top,0,5);
 <div class="glass-container">
 
  <section class="filter-bar">
-    <h2 class="grid-title">Grille de Stories</h2>
+    <div class="grid-header">
+        <h2 class="grid-title">Grille de Stories</h2>
+        <div class="title-underline"></div>
+    </div>
+
     <form method="GET" class="filter-form">
-        <label for="categorie" class="filter-label"></label>
         <div class="filter-group">
             <select name="categorie" id="categorie">
                 <option value="">Toutes les catégories</option>
@@ -129,7 +146,7 @@ $top_5 = array_slice($stories_top,0,5);
                 <option value="Bons plans" <?php if ($categorie_filtre === "Bons plans") echo "selected"; ?>>Bons plans</option>
                 <option value="Difficultés" <?php if ($categorie_filtre === "Difficultés") echo "selected"; ?>>Difficultés</option>
         </select>
-        <button type="submit" class="btn-filter">Filtrer</button>
+        <button type="submit" class="btn-filter"><span class="material-symbols-outlined filter-icon">filter_list</span>Filtrer</button>
     </div>
     </form>
 </section>
@@ -152,7 +169,7 @@ $top_5 = array_slice($stories_top,0,5);
             <a href="story.php?id=<?php echo $story['id']; ?>" class="story-card">
                 <div class="card-content">
                     <span class="category-badge <?php echo $classe_categorie; ?>">
-                        <?php echo strtoupper($story["categorie"]); ?>
+                        <?php echo mb_strtoupper($story["categorie"], 'UTF-8'); ?>
                     </span>
                     
                     <h3><?php echo htmlspecialchars($story["titre"]); ?></h3>
@@ -177,7 +194,7 @@ $top_5 = array_slice($stories_top,0,5);
             <?php endforeach; ?>
         <?php endif; ?></main>
 
-    <script src="java/ajax.js"></script>
-    <script src="java/main.js"></script>
+    <script src="js/ajax.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
