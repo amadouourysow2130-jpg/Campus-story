@@ -151,7 +151,7 @@ $top_5 = array_slice($stories_top,0,5);
     </form>
 </section>
 
-    <main id="feed_stories">
+    <main id="stories-container">
         <?php if (empty($stories_filtrees)): ?>
             <p>Aucune story trouvée.</p>
         <?php else: ?>
