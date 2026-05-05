@@ -124,17 +124,48 @@ $story = $stories[$index];
     <?php endif; ?>
 
     <form method="POST" style="display:flex; flex-wrap:wrap; gap:10px;">
-        <button type="submit" name="reaction" value="utile">Utile : <?php echo $story["reactions"]["utile"]; ?></button>
-        <button type="submit" name="reaction" value="inspirant">Inspirant : <?php echo $story["reactions"]["inspirant"]; ?></button>
-        <button type="submit" name="reaction" value="vecu_pareil">Pareil : <?php echo $story["reactions"]["vecu_pareil"]; ?></button>
-        <button type="submit" name="reaction" value="bon_conseil">Bon conseil : <?php echo $story["reactions"]["bon_conseil"]; ?></button>
-        <button type="submit" name="reaction" value="a_eviter">À éviter : <?php echo $story["reactions"]["a_eviter"]; ?></button>
-    </form>
+        <button type="submit" name="reaction" value="utile">
+            Utile : <span id="reaction-utile"><?php echo $story["reactions"]["utile"]; ?></span>
+        </button>
 
+        <button type="submit" name="reaction" value="inspirant">
+            Inspirant : <span id="reaction-inspirant"><?php echo $story["reactions"]["inspirant"]; ?></span>
+        </button>
+
+        <button type="submit" name="reaction" value="vecu_pareil">
+            Pareil : <span id="reaction-vecu-pareil"><?php echo $story["reactions"]["vecu_pareil"]; ?></span>
+        </button>
+
+        <button type="submit" name="reaction" value="bon_conseil">
+            Bon conseil : <span id="reaction-bon-conseil"><?php echo $story["reactions"]["bon_conseil"]; ?></span>
+        </button>
+
+        <button type="submit" name="reaction" value="a_eviter">
+            À éviter : <span id="reaction-a-eviter"><?php echo $story["reactions"]["a_eviter"]; ?></span>
+        </button>
+    </form>
     <br>
     <a href="index.php" style="color:#0f172a; font-weight:bold;">← Retour</a>
 
 </main>
+<script>
+    const storyId = <?php echo $story["id"]; ?>;
 
+    function updateReactions() {
+        fetch("api/get_story.php?id=" + storyId)
+            .then(res => res.json())
+            .then(story => {
+                if (!story) return;
+
+                document.getElementById("reaction-utile").textContent = story.reactions.utile;
+                document.getElementById("reaction-inspirant").textContent = story.reactions.inspirant;
+                document.getElementById("reaction-vecu-pareil").textContent = story.reactions.vecu_pareil;
+                document.getElementById("reaction-bon-conseil").textContent = story.reactions.bon_conseil;
+                document.getElementById("reaction-a-eviter").textContent = story.reactions.a_eviter;
+            });
+    }
+
+    setInterval(updateReactions, 3000);
+</script>
 </body>
 </html>

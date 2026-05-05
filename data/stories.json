@@ -33,27 +33,33 @@
         "auteur": "SOw",
         "date": "2026-05-05 02:01:07",
         "reactions": {
-            "utile": 0,
-            "inspirant": 0,
-            "vecu_pareil": 0,
-            "bon_conseil": 0,
-            "a_eviter": 0
-        }
-    },
-    {
-        "id": 3,
-        "titre": "le jour de notre examen",
-        "contenu": "jnlcqslknmdc",
-        "categorie": "Examens",
-        "type_experience": "Bon plan",
-        "auteur": "SOw",
-        "date": "2026-05-05 02:03:20",
-        "reactions": {
-            "utile": 0,
-            "inspirant": 0,
-            "vecu_pareil": 0,
-            "bon_conseil": 0,
-            "a_eviter": 0
+            "utile": 2,
+            "inspirant": 2,
+            "vecu_pareil": 2,
+            "bon_conseil": 2,
+            "a_eviter": 2
+        },
+        "reacted_users": {
+            "utile": [
+                4,
+                2
+            ],
+            "inspirant": [
+                2,
+                4
+            ],
+            "vecu_pareil": [
+                2,
+                4
+            ],
+            "bon_conseil": [
+                2,
+                4
+            ],
+            "a_eviter": [
+                2,
+                4
+            ]
         }
     },
     {
@@ -147,6 +153,35 @@
             "vecu_pareil": [
                 2,
                 4
+            ],
+            "bon_conseil": [],
+            "a_eviter": []
+        }
+    },
+    {
+        "id": 7,
+        "titre": "Mon inscription",
+        "contenu": "je n'étais suivi du tout",
+        "categorie": "Examens",
+        "type_experience": "Conseil",
+        "auteur": "Shadow",
+        "date": "2026-05-05 02:57:42",
+        "reactions": {
+            "utile": 1,
+            "inspirant": 1,
+            "vecu_pareil": 1,
+            "bon_conseil": 0,
+            "a_eviter": 0
+        },
+        "reacted_users": {
+            "utile": [
+                4
+            ],
+            "inspirant": [
+                4
+            ],
+            "vecu_pareil": [
+                2
             ],
             "bon_conseil": [],
             "a_eviter": []

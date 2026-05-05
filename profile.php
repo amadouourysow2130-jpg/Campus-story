@@ -87,46 +87,31 @@ $nb_stories = count($mes_stories);
         </div>
     </section>
 
-    <main id="feed_stories">
-        <?php if (empty($mes_stories)): ?>
-            <p>Vous n'avez encore publié aucune story.</p>
-        <?php else: ?>
-            <?php foreach ($mes_stories as $story): 
+    <main style="max-width:1200px; margin:30px auto; display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:25px; padding:0 20px;">
 
-                $search = ['é','è','ê','ë','à','â','î','ï','ô','û','ù','ç',' '];
-                $replace = ['e','e','e','e','a','a','i','i','o','u','u','c','-'];
-                $nom_propre = str_replace($search,$replace, strtolower(trim($story["categorie"])));
-                $nom_propre = preg_replace('/[^a-z0-9]+/', '-', $nom_propre);
-                $nom_propre = trim($nom_propre, '-');
+        <?php foreach ($mes_stories as $story): ?>
+            <a href="story.php?id=<?php echo $story['id']; ?>"
+            style="background:#0f172a; color:white; text-decoration:none; padding:20px; border-radius:12px; min-height:260px; display:flex; flex-direction:column; justify-content:space-between;">
+
+            <div>
                 
-                $classe_categorie = 'cat-' . $nom_propre;
-            ?>
 
-            <a href="story.php?id=<?php echo $story['id']; ?>" class="story-card">
-                <div class="card-content">
+             <h3 style="color:#d35400;">
+                <?php echo $story["titre"]; ?>
+             </h3>
 
-                    <span class="category-badge <?php echo $classe_categorie; ?>">
-                        <?php echo mb_strtoupper($story["categorie"], 'UTF-8'); ?>
-                    </span>
+             <p style="color:white;">
+                <?php echo substr($story["contenu"], 0, 100); ?>...
+             </p>
+            </div>
 
-                    <h3><?php echo htmlspecialchars($story["titre"]); ?></h3>
+            <div style="border-top:1px solid rgba(255,255,255,0.2); padding-top:15px;">
+        <?php echo $story["categorie"]; ?>
+        </div>
+    </a>
+<?php endforeach; ?>
 
-                    <p>
-                        <?php echo htmlspecialchars(substr($story["contenu"], 0, 100)); ?>...
-                    </p>
-
-                    <div class="story-card-footer">
-                        <span class="post-date">
-                            <?php echo date("d/m/Y", strtotime($story["date"])); ?>
-                        </span>
-                    </div>
-
-                </div>
-            </a>
-
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </main>
+</main>
 
 </div>
 

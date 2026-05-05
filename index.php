@@ -221,6 +221,10 @@ $top_5 = array_slice($stories_top,0,5);
     </script>
 
   
-    
+    <script>
+        setInterval(() => {
+        window.location.reload();
+        }, 8000);
+    </script>
 </body>
 </html>
