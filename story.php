@@ -10,54 +10,50 @@ if (!isset($_GET["id"])) {
     exit();
 }
 
-$id = $_GET["id"];
-$story_trouvee = null;
+$id = (int) $_GET["id"];
+$story = null;
 $index = null;
 
-foreach ($stories as $i => $story) {
-    if ($story["id"] == $id) {
-        $story_trouvee = $story;
+foreach ($stories as $i => $s) {
+    if ((int)$s["id"] === $id) {
+        $story = $s;
         $index = $i;
         break;
     }
 }
 
-if ($story_trouvee === null) {
+if ($story === null) {
     echo "Story non trouvée.";
     exit();
-}
-
-if (!isset($stories[$index]["reacted_users"])) {
-    $stories[$index]["reacted_users"] = [
-        "utile" => [],
-        "inspirant" => [],
-        "vecu_pareil" => [],
-        "bon_conseil" => [],
-        "a_eviter" => []
-    ];
 }
 
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
     if (!utilisateur_connecte()) {
         $message = "Vous devez être connecté pour réagir.";
     } else {
         $reaction = $_POST["reaction"];
-        $utilisateur = obtenir_utilisateur();
-        $user_id = $utilisateur["id"];
+        $user = obtenir_utilisateur();
+        $user_id = $user["id"];
+
+        if (!isset($stories[$index]["reacted_users"])) {
+            $stories[$index]["reacted_users"] = [
+                "utile" => [],
+                "inspirant" => [],
+                "vecu_pareil" => [],
+                "bon_conseil" => [],
+                "a_eviter" => []
+            ];
+        }
 
         if (isset($stories[$index]["reactions"][$reaction])) {
-
             if (in_array($user_id, $stories[$index]["reacted_users"][$reaction])) {
                 $message = "Vous avez déjà choisi cette réaction.";
             } else {
                 $stories[$index]["reactions"][$reaction]++;
                 $stories[$index]["reacted_users"][$reaction][] = $user_id;
-
                 ecrire_json($chemin, $stories);
-
                 header("Location: story.php?id=" . $id);
                 exit();
             }
@@ -65,84 +61,80 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-$story_trouvee = $stories[$index];
+$story = $stories[$index];
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Détail de la story</title>
+    <meta charset="UTF-8">
+    <title><?php echo $story["titre"]; ?> - Campus Stories</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<h1><?php echo $story_trouvee["titre"]; ?></h1>
+<nav class="navbar">
+    <div class="nav-left">
+        <?php if (utilisateur_connecte()): ?>
+            <span class="user-badge"><?php echo obtenir_utilisateur()["nom"]; ?></span>
+        <?php endif; ?>
+    </div>
 
-<p>
-    Auteur : <?php echo $story_trouvee["auteur"]; ?><br>
-    Catégorie : <?php echo $story_trouvee["categorie"]; ?><br>
-    Type : <?php echo $story_trouvee["type_experience"]; ?><br>
-    Date : <?php echo $story_trouvee["date"]; ?>
-</p>
+    <div class="nav-center">
+        <a href="index.php" class="logo-link">
+            <span class="logo-text">Campus Stories</span>
+        </a>
+    </div>
 
-<p><?php echo $story_trouvee["contenu"]; ?></p>
+    <div class="menu nav-right">
+        <?php if (utilisateur_connecte()): ?>
+            <a href="create_story.php">Publier</a>
+            <a href="logout.php">Déconnexion</a>
+        <?php else: ?>
+            <a href="login.php">Connexion</a>
+        <?php endif; ?>
+    </div>
+</nav>
 
-<hr>
+<main style="max-width:900px; margin:50px auto; background:white; color:#0f172a; padding:35px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
 
-<h3>Réactions</h3>
+    <h1 style="color:#d35400; font-size:32px; margin-bottom:20px;">
+        <?php echo $story["titre"]; ?>
+    </h1>
 
-<?php if ($message != ""): ?>
-    <p style="color:red;"><?php echo $message; ?></p>
-<?php endif; ?>
+    <p style="color:#334155; font-size:15px;">
+        <strong>Auteur :</strong> <?php echo $story["auteur"]; ?><br>
+        <strong>Catégorie :</strong> <?php echo $story["categorie"]; ?><br>
+        <strong>Type :</strong> <?php echo $story["type_experience"]; ?><br>
+        <strong>Date :</strong> <?php echo $story["date"]; ?>
+    </p>
 
-<form method="POST">
-    <button type="submit" name="reaction" value="utile">
-        Utile : <span id="reaction-utile"><?php echo $story_trouvee["reactions"]["utile"]; ?></span>
-    </button>
+    <hr>
 
-    <button type="submit" name="reaction" value="inspirant">
-        Inspirant : <span id="reaction-inspirant"><?php echo $story_trouvee["reactions"]["inspirant"]; ?></span>
-    </button>
+    <p style="font-size:18px; line-height:1.8; color:#0f172a;">
+        <?php echo nl2br($story["contenu"]); ?>
+    </p>
 
-    <button type="submit" name="reaction" value="vecu_pareil">
-        J’ai vécu pareil : <span id="reaction-vecu-pareil"><?php echo $story_trouvee["reactions"]["vecu_pareil"]; ?></span>
-    </button>
+    <hr>
 
-    <button type="submit" name="reaction" value="bon_conseil">
-        Bon conseil : <span id="reaction-bon-conseil"><?php echo $story_trouvee["reactions"]["bon_conseil"]; ?></span>
-    </button>
+    <h3 style="color:#0f172a;">Réactions</h3>
 
-    <button type="submit" name="reaction" value="a_eviter">
-        À éviter : <span id="reaction-a-eviter"><?php echo $story_trouvee["reactions"]["a_eviter"]; ?></span>
-    </button>
-</form>
+    <?php if ($message !== ""): ?>
+        <p style="color:red; font-weight:bold;"><?php echo $message; ?></p>
+    <?php endif; ?>
 
-<br>
+    <form method="POST" style="display:flex; flex-wrap:wrap; gap:10px;">
+        <button type="submit" name="reaction" value="utile">Utile : <?php echo $story["reactions"]["utile"]; ?></button>
+        <button type="submit" name="reaction" value="inspirant">Inspirant : <?php echo $story["reactions"]["inspirant"]; ?></button>
+        <button type="submit" name="reaction" value="vecu_pareil">Pareil : <?php echo $story["reactions"]["vecu_pareil"]; ?></button>
+        <button type="submit" name="reaction" value="bon_conseil">Bon conseil : <?php echo $story["reactions"]["bon_conseil"]; ?></button>
+        <button type="submit" name="reaction" value="a_eviter">À éviter : <?php echo $story["reactions"]["a_eviter"]; ?></button>
+    </form>
 
-<a href="index.php">Retour</a>
+    <br>
+    <a href="index.php" style="color:#0f172a; font-weight:bold;">← Retour</a>
 
-<script>
-const storyId = <?php echo $story_trouvee["id"]; ?>;
-
-function mettreAJourReactions() {
-    fetch("api/get_story.php?id=" + storyId)
-        .then(response => response.json())
-        .then(story => {
-            if (!story) return;
-
-            document.getElementById("reaction-utile").textContent = story.reactions.utile;
-            document.getElementById("reaction-inspirant").textContent = story.reactions.inspirant;
-            document.getElementById("reaction-vecu-pareil").textContent = story.reactions.vecu_pareil;
-            document.getElementById("reaction-bon-conseil").textContent = story.reactions.bon_conseil;
-            document.getElementById("reaction-a-eviter").textContent = story.reactions.a_eviter;
-        })
-        .catch(error => {
-            console.error("Erreur AJAX story :", error);
-        });
-}
-
-setInterval(mettreAJourReactions, 5000);
-</script>
+</main>
 
 </body>
 </html>

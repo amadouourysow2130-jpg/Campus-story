@@ -1,9 +1,4 @@
 <?php
-require_once 'includes/session.php';
-proteger_page();
-?>
-
-<?php
 // =================================
 //  BACKEND AMADOU - CREATE STORY
 // =================================
@@ -59,30 +54,63 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Publier une expérience</title>
+
+    <meta charset="UTF-8">
+    <title>Campus Stories</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- ============================== -->
-<!--  FRONTEND LYSA - FORMULAIRE -->
-<!-- ============================== -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <?php if(utilisateur_connecte()): ?>
+                <a href="profile.php" class="user-badge nav-link-badge" style="text-decoration:none;">
+                    <span class="material-symbols-outlined">account_circle</span>
+                    <?php echo htmlspecialchars(obtenir_utilisateur()["nom"]); ?>
+                </a>
+            <?php endif; ?>
+        </div>
 
-<h2>Publier une expérience</h2>
+        <div class="nav-center">
+            <a href="index.php" class="logo-link">
+                <img src="images/logo.jpg" alt="Logo" class="logo-img">
+                <span class="logo-text">Campus Stories</span>
+            </a>
+        </div>
 
-<?php if ($message != ""): ?>
-    <p style="color:red;"><?php echo $message; ?></p>
-<?php endif; ?>
+        <div class="menu nav-right">
+            <?php if(utilisateur_connecte()): ?>
+                <a href="logout.php" class="user-badge nav-link-badge logout-hover">
+                    <span class="material-symbols-outlined">logout</span>
+                    Déconnexion
+                </a>
+            <?php else: ?>
+                <a href="login.php" class="user-badge nav-link-badge">
+                    <span class="material-symbols-outlined">login</span>
+                    Connexion
+                </a>
+            <?php endif; ?>
+        </div>
+    </nav>
 
-<form method="POST">
-    <label>Titre :</label><br>
-    <input type="text" name="titre"><br><br>
-
-    <label>Contenu :</label><br>
-    <textarea name="contenu"></textarea><br><br>
-
-    <label>Catégorie :</label><br>
-    <select name="categorie">
+<div class="reader-container">
+    <form method="POST" action="create_story.php" class="login-form large-form">
+        <h2>Publier une expérience</h2>
+        
+        <?php if ($message != ""): ?>
+            <p style="color:#e74c3c; font-weight:bold; text-align:center;"><?php echo $message; ?></p>
+        <?php endif; ?>
+        
+        <label>Titre</label>
+        <input type="text" name="titre" placeholder="Entrez votre titre" required>
+        
+        <label>Votre story</label>
+        <textarea name="contenu" rows="6" placeholder="Racontez votre expérience..." required></textarea>
+        
+        <label>Catégorie</label>
+        <select name="categorie" required>
         <option value="">Choisir</option>
         <option value="Cours">Cours</option>
         <option value="Examens">Examens</option>
@@ -91,10 +119,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <option value="Démarches administratives">Démarches administratives</option>
         <option value="Bons plans">Bons plans</option>
         <option value="Difficultés">Difficultés</option>
-    </select><br><br>
-
-    <label>Type d’expérience :</label><br>
-    <select name="type_experience">
+    </select>
+    
+    <label>Type d’expérience</label>
+    <select name="type_experience" required>
         <option value="">Choisir</option>
         <option value="Témoignage">Témoignage</option>
         <option value="Conseil">Conseil</option>
@@ -102,10 +130,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <option value="Bon plan">Bon plan</option>
         <option value="Erreur à éviter">Erreur à éviter</option>
         <option value="Expérience marquante">Expérience marquante</option>
-    </select><br><br>
+    </select>
 
-    <button type="submit">Publier</button>
-</form>
+    <button type="submit" class="btn-filter">Publier</button>
+
+    <p class="auth-switch">
+        <a href="index.php" class="btn-back"> ← Retour à l'acceuil</a>
+    </p>
+</form></div>
 
 </body>
 </html>
