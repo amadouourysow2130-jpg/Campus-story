@@ -151,56 +151,76 @@ $top_5 = array_slice($stories_top,0,5);
     </form>
 </section>
 
-    <main id="stories-container">
-        <?php if (empty($stories_filtrees)): ?>
-            <p>Aucune story trouvée.</p>
-        <?php else: ?>
-            <?php foreach ($stories_filtrees as $story): 
-                $search = ['é', 'è', 'ê', 'ë', 'à', 'â', 'î', 'ï', 'ô', 'û', 'ù', 'ç', ' '];
-                $replace = ['e', 'e', 'e', 'e', 'a', 'a', 'i', 'i', 'o', 'u', 'u', 'c', '-'];
-                $nom_propre = str_replace($search,$replace, strtolower(trim($story["categorie"])));
+    <main style="max-width:1200px; margin:30px auto; display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:25px; padding:0 20px;">
 
-                $nom_propre = preg_replace('/[^a-z0-9]+/', '-', $nom_propre);
-                $nom_propre = trim($nom_propre, '-');
-                
-                $classe_categorie = 'cat-' . $nom_propre;
-            ?>
-            
-            <a href="story.php?id=<?php echo $story['id']; ?>" class="story-card">
-                <div class="card-content">
-                    <span class="category-badge <?php echo $classe_categorie; ?>">
-                        <?php echo mb_strtoupper($story["categorie"], 'UTF-8'); ?>
-                    </span>
-                    
-                    <h3><?php echo htmlspecialchars($story["titre"]); ?></h3>
-                
-                    <p class="story-excerpt"><?php echo htmlspecialchars(substr($story["contenu"], 0, 100)); ?>...</p>
-                    
-                    <div class="story-card-footer">
-                        <div class="user-info">
-                            <div class="author-block">
-                                <span class="material-symbols-outlined author-icon">account_circle</span>
-                                <span class="author-name"><?php echo htmlspecialchars($story["auteur"]); ?></span>
-                            </div>
-                            
-                            <?php if (utilisateur_connecte() && obtenir_utilisateur()["nom"] === $story["auteur"]): ?>
-                                <div class="author-actions">
-                                    <span class="action-link" onclick="event.preventDefault(); window.location.href='edit_story.php?id=<?php echo $story['id']; ?>';">Modifier</span>
-                                    <span class="action-link delete" onclick="event.preventDefault(); window.location.href='delete_story.php?id=<?php echo $story['id']; ?>';">Supprimer</span>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div></div></a>
-            <?php endforeach; ?>
-        <?php endif; ?></main>
+<?php if (empty($stories_filtrees)): ?>
+    <p>Aucune story trouvée.</p>
+<?php else: ?>
+    <?php foreach ($stories_filtrees as $story): ?>
+
+        <a href="story.php?id=<?php echo $story['id']; ?>" 
+           style="background:#0f172a; color:white; text-decoration:none; padding:20px; border-radius:12px; min-height:260px; display:flex; flex-direction:column; justify-content:space-between;">
+
+            <div>
+                <?php
+                $categorie = strtolower($story["categorie"]);
+
+                $couleur = "#d35400"; // défaut
+
+                if ($categorie == "examens") $couleur = "#e74c3c";
+                elseif ($categorie == "cours") $couleur = "#3498db";
+                elseif ($categorie == "logement") $couleur = "#e67e22";
+                elseif ($categorie == "vie sur le campus") $couleur = "#2ecc71";
+                elseif ($categorie == "bons plans") $couleur = "#f1c40f";
+                elseif ($categorie == "démarches administratives") $couleur = "#9b59b6";
+                elseif ($categorie == "difficultés") $couleur = "#7f8c8d";
+                ?>
+
+                <span style="
+                    display:inline-block;
+                    padding:4px 12px;
+                    border-radius:20px;
+                    font-size:12px;
+                    font-weight:bold;
+                    background: <?php echo $couleur; ?>20;
+                    color: <?php echo $couleur; ?>;
+                ">
+                    <?php echo strtoupper($story["categorie"]); ?>
+                </span>
+
+                <h3 style="color:#d35400; margin-top:15px;">
+                    <?php echo $story["titre"]; ?>
+                </h3>
+
+                <p style="color:white;">
+                    <?php echo substr($story["contenu"], 0, 100); ?>...
+                </p>
+            </div>
+
+            <div style="border-top:1px solid rgba(255,255,255,0.2); padding-top:15px; margin-top:20px;">
+                👤 <?php echo $story["auteur"]; ?>
+
+                <?php if (utilisateur_connecte() && obtenir_utilisateur()["nom"] === $story["auteur"]): ?>
+                    <br>
+                    <span onclick="event.preventDefault(); window.location.href='edit_story.php?id=<?php echo $story['id']; ?>';" style="color:#d35400;">Modifier</span>
+                    |
+                    <span onclick="event.preventDefault(); window.location.href='delete_story.php?id=<?php echo $story['id']; ?>';" style="color:#ff7675;">Supprimer</span>
+                <?php endif; ?>
+            </div>
+
+        </a>
+
+    <?php endforeach; ?>
+<?php endif; ?>
+
+</main>
 
     <script>
         var utilisateurConnecte = <?php echo utilisateur_connecte() ? 'true' : 'false'; ?>;
         var nomUtilisateur = "<?php echo (utilisateur_connecte()) ? obtenir_utilisateur()['nom'] : ''; ?>";
     </script>
 
-    <script src="js/ajax.js"></script>
-    <script src="js/main.js"></script>
-</body>
+  
+    
 </body>
 </html>
