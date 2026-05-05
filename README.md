@@ -6,6 +6,13 @@ projet web campus-story
 - Tran Lysa 
 
 ---
+## Lien du projet GitHub
+
+https://github.com/amadouourysow2130-jpg/Campus-story
+
+## 🎥 Démonstration vidéo
+
+https://www.youtube.com/@AmadouOurySow-u2b 
 
 ##  Description du projet
 
@@ -59,7 +66,7 @@ Le site empêche plusieurs actions non autorisées :
 
 ---
 
-## Architecture du projet
+## Structure du projet
 Campus-story/
 │
 ├── index.php
